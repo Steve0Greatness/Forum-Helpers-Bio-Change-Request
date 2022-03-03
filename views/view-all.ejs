@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang=en>
+
+<head>
+	<title>View Bio Requests</title>
+	<link rel="icon" href="/favicon.png">
+	<link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+	<p>Here is the public library of all current requests(note: the requests currently do not get removed, that feature may come at some point, but currently, it's not a feature).</p>
+	<% for (let d = 0; d <= Object.keys(data).length; d++) { %>
+	<div class="changeRequest">
+		<span><%- Object.keys(data)[d] -%></span>
+		<span><%- data[Object.keys(data)[d]] -%></span>
+	</div>
+	<% } %>
+</body>
+
+</html>

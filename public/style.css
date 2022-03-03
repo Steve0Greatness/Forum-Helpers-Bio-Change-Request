@@ -1,0 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+html {
+	--primary: #B7E4E2;
+	--secondary: #31ACBA;
+	--secondaryHover: #056472;
+	--textMain: black;
+	--textSecond: white;
+	--linkHover: blue;
+	--searchbar: white;
+	--saturation: 100%;
+	--tertiary: #2f7299;
+	--tertiaryHover: #2c566e;
+	--textTertiary: #ffffff;
+	/* main css */
+	background-color: var(--primary);
+	color: var(--textMain);
+	font-family: Arial, sans-serif;
+}
+/* themes may not be added */
+
+header {
+	font-family: "Montserrat", Arial, sans-serif;
+}
+
+.changeRequest span {
+	margin-right: 1em;
+}
+
+:any-link {
+	color: inherit;
+}
+
+:any-link:hover {
+	color: var(--linkHover);
+}
