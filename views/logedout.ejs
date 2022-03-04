@@ -8,8 +8,13 @@
 </head>
 	
 <body>
-	<h1>Log In</h1>
-	<a href="https://fluffyscratch.hampton.pw/auth/getKeys/v2?redirect=<%- Buffer.from('lowestoffbeatscope.stevesgreatness.repl.co/login', 'utf-8').toString('base64') -%>">Login</a>
+	<%- include("header") -%>
+	<main id="content">
+		<h1>Log In</h1>
+		<a href="https://fluffyscratch.hampton.pw/auth/getKeys/v2?redirect=<%- Buffer.from('lowestoffbeatscope.stevesgreatness.repl.co/login', 'utf-8').toString('base64') -%>">Login</a>
+		<p>Quickly request for your bio in the Forum Helpers website to be changed.</p>
+	</main>
+	<%- include("footer") -%>
 </body>
 
 </html>

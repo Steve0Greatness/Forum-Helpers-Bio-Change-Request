@@ -3,7 +3,8 @@ const store = require("store"),
 	cookie = require("cookie-parser"),
 	express = require("express"),
 	app = express(),
-	port = 8080
+	port = 8080,
+	loginLength = 5 * 60 * 1000
 
 app.set("views", "./views")
 app.set("view engine", "ejs")
@@ -30,7 +31,7 @@ app.get("/login", (req, res) => {
 						let bdy = JSON.parse(dt)
 						bdy.forEach((user) => {
 							if (user.name.toUpperCase() == body.username.toUpperCase()) {
-								res.cookie("user", user.name.toUpperCase(), { maxAge: 60*1000 })
+								res.cookie("user", user.name.toUpperCase(), { maxAge: loginLength })
 								isbad = false
 							}
 						})
@@ -55,9 +56,7 @@ app.get("/submit", (req, res) => {
 })
 
 app.get("/view-all", (req, res) => {
-	let sendObject = {
-		S0G: "Hello, World!",
-	}
+	let sendObject = {}
 	store.each((bio, user) => {
 		sendObject[user] = bio
 	})

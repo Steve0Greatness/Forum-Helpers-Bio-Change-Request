@@ -6,12 +6,16 @@ html {
 	--secondaryHover: #056472;
 	--textMain: black;
 	--textSecond: white;
+	--linkHoverSecond: #ccc;
 	--linkHover: blue;
 	--searchbar: white;
 	--saturation: 100%;
 	--tertiary: #2f7299;
 	--tertiaryHover: #2c566e;
 	--textTertiary: #ffffff;
+	--inputMain: #B0E0E4;
+	--inputBorder: black;
+	--inputText: black;
 	/* main css */
 	background-color: var(--primary);
 	color: var(--textMain);
@@ -19,8 +23,14 @@ html {
 }
 /* themes may not be added */
 
-header {
-	font-family: "Montserrat", Arial, sans-serif;
+body,
+html {
+	margin: 0;
+}
+
+main#content {
+	margin: 8px;
+	min-height: 83vh;
 }
 
 .changeRequest span {
@@ -33,4 +43,58 @@ header {
 
 :any-link:hover {
 	color: var(--linkHover);
+}
+
+input,
+textarea,
+button {
+	background-color: var(--inputMain);
+	color: var(--inputText);
+	border: 2px solid var(--inputBorder);
+	border-radius: 10px;
+	padding: 2px;
+}
+
+header,
+footer {
+	background-color: var(--secondary);
+	color: var(--textSecond);
+	font-family: "Montserrat", Arial, sans-serif;
+}
+
+footer {
+	text-align: center;
+}
+
+header {
+	display: flex;
+	padding: 5px;
+}
+
+header #sectionAheader {
+	flex: 3;
+	color: var(--textSecond);
+	text-decoration: none;
+	display: flex;
+	align-items: center;
+}
+
+header #sectionAheader:hover {
+	color: var(--textSecond);
+}
+
+.inline {
+	display: inline-block;
+	margin: 0;
+}
+
+header #sectionBheader :any-link {
+	color: var(--textSecond);
+	text-decoration: none;
+	font-size: 2rem;
+	margin-right: 10px;
+}
+
+header #sectionBheader :any-link:hover {
+	color: var(--linkHoverSecond);
 }
