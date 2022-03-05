@@ -4,15 +4,16 @@ const store = require("store"),
 	express = require("express"),
 	app = express(),
 	port = 8080,
-	loginLength = 5 * 60 * 1000
+	loginLength = 5 * 60 * 1000,
+	secret = Buffer.from((port * 20).toString(), "utf-8").toString("base64")
 
 app.set("views", "./views")
 app.set("view engine", "ejs")
 app.use(express.static("./public"))
-app.use(cookie())
+app.use(cookie(secret))
 
 app.get("/", (req, res) => {
-	if ("user" in req.cookies) {
+	if ("user" in req.signedCookies) {
 		res.render("index")
 		return
 	}
@@ -31,7 +32,7 @@ app.get("/login", (req, res) => {
 						let bdy = JSON.parse(dt)
 						bdy.forEach((user) => {
 							if (user.name.toUpperCase() == body.username.toUpperCase()) {
-								res.cookie("user", user.name.toUpperCase(), { maxAge: loginLength })
+								res.cookie("user", Buffer.from(user.name.toUpperCase(), "utf-8").toString("base64"), { maxAge: loginLength, httponly: true, signed: true, secret: secret })
 								isbad = false
 							}
 						})
@@ -51,7 +52,7 @@ app.get("/login", (req, res) => {
 })
 
 app.get("/submit", (req, res) => {
-	store.set(req.cookies.user, req.query.body)
+	store.set(Buffer.from(req.signedCookies.user, "base64").toString("utf-8"), req.query.body)
 	res.redirect("/")
 })
 
