@@ -1,4 +1,4 @@
-const store = require("store"),
+const fs = require("fs"),
 	request = require("request"),
 	cookie = require("cookie-parser"),
 	express = require("express"),
@@ -52,17 +52,18 @@ app.get("/login", (req, res) => {
 })
 
 app.get("/submit", (req, res) => {
-	store.set(Buffer.from(req.signedCookies.user, "base64").toString("utf-8"), req.query.body)
+	fs.readFile(__dirname + "/public/requests.json", "utf-8", (err, body) => {
+		let data = JSON.parse(body),
+			user = Buffer.from(req.signedCookies.user, "base64").toString("utf-8")
+		data[user] = req.query.body
+		fs.writeFile(__dirname + "/public/requests.json", JSON.stringify(data))
+	})
 	res.redirect("/")
 })
 
 app.get("/view-all", (req, res) => {
-	let sendObject = {}
-	store.each((bio, user) => {
-		sendObject[user] = bio
-	})
-	setTimeout(() => {
-		res.render("view-all", { data: sendObject })
+	fs.readFile(__dirname + "/public/requests.json", "utf-8", (err, body) => {
+		res.render("view-all", { data: JSON.parse(body) })
 	})
 })
 

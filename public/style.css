@@ -98,3 +98,9 @@ header #sectionBheader :any-link {
 header #sectionBheader :any-link:hover {
 	color: var(--linkHoverSecond);
 }
+
+#requests {
+	background: var(--tertiary);
+	color: var(--textTertiary);
+	padding: 5px;
+}
