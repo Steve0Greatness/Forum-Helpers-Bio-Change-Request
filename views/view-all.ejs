@@ -10,13 +10,19 @@
 <body>
 	<%- include("header") -%>
 	<main id="content">
-		<p></p>
+		<p>Viewing all requests, there are currently <%- Object.keys(data).length -%> request(s).</p>
 		<div id="requests">
-			<% for (let d = 0; d <= Object.keys(data).length; d++) { %>
+			<% for (let d = 0; d < Object.keys(data).length; d++) { %>
 			<div class="changeRequest">
 				<span><%- Object.keys(data)[d] -%></span>
 				<span><%- data[Object.keys(data)[d]] -%></span>
+				<span>
+					<a href="/mark/<%- Object.keys(data)[d] -%>">Done&#10003;</a>
+				</span>
 			</div>
+			<% } %>
+			<% if (Object.keys(data).length == 0) { %>
+			<p>No current requests, check back later.</p>
 			<% } %>
 		</div>
 	</main>

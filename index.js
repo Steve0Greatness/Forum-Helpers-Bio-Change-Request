@@ -56,7 +56,7 @@ app.get("/submit", (req, res) => {
 		let data = JSON.parse(body),
 			user = Buffer.from(req.signedCookies.user, "base64").toString("utf-8")
 		data[user] = req.query.body
-		fs.writeFile(__dirname + "/public/requests.json", JSON.stringify(data))
+		fs.writeFile(__dirname + "/public/requests.json", JSON.stringify(data), {}, () => {})
 	})
 	res.redirect("/")
 })
@@ -65,6 +65,40 @@ app.get("/view-all", (req, res) => {
 	fs.readFile(__dirname + "/public/requests.json", "utf-8", (err, body) => {
 		res.render("view-all", { data: JSON.parse(body) })
 	})
+})
+
+app.get("/mark/:user", async function(req, res) {
+	fs.readFile(__dirname + "/public/requests.json", "utf-8", (err, body) => {
+		let data = JSON.parse(body),
+			isbad = true,
+			check = (file, user, body) => {
+				let url = "https://theforumhelpers.github.io/forumhelpers/" + file
+				request.get(url, (rr, rs, bdy) => {
+					let dt = JSON.parse(bdy),
+						finished = false
+					dt.forEach(d => {
+						if (finished) return
+						if (d.name.toUpperCase() == user && d.bio == body) {
+							finished = true
+							isbad = false
+						}
+					})
+				})
+			},
+		user = req.params.user.toUpperCase()
+		if (!user in data) return;
+		check("curators.json", user, data[user])
+		check("managers.json", user, data[user])
+		setTimeout(() => {
+			if (!isbad) delete data[user]
+			fs.writeFile(__dirname + "/public/requests.json", JSON.stringify(data), {}, () => {})
+			res.redirect("/view-all")
+		}, 1000)
+	})
+})
+
+app.get("/whats-next", (req, res) => {
+	res.render("wn")
 })
 
 app.listen(port)
